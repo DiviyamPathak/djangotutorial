@@ -1,0 +1,15 @@
+
+
+{% block body %}
+<form action="{% url add %}" method="post">
+    {% csrf token %}
+    <button id="addbtn">Add</button>
+    <input type="text">
+
+
+
+</form>
+
+<a href="{%url "index" %}">show all tasks</a>
+
+{% endblock %}
