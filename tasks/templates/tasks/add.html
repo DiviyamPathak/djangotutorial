@@ -1,15 +1,15 @@
 
 
 {% block body %}
-<form action="{% url add %}" method="post">
-    {% csrf token %}
+<form action="{% url 'tasks:add' %}" method="post">
+    {% csrf_token  %}
     <button id="addbtn">Add</button>
-    <input type="text">
+    {{forms}}
 
 
 
 </form>
 
-<a href="{%url "index" %}">show all tasks</a>
+<a href="{%url 'tasks:index' %}">show all tasks</a>
 
 {% endblock %}
