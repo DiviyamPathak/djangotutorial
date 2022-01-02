@@ -9,7 +9,7 @@ from django.urls import reverse
 
 
 
-Tasks=["foo", "bar" , "qiz"] 
+
 
 class NewTasksForm(forms.Form):
     task = forms.CharField(label="Add New Task")
@@ -17,8 +17,11 @@ class NewTasksForm(forms.Form):
 
 # Create your views here.
 def index(request):
+    if "Tasks" not in request.session:
+        request.session["Tasks"] = []
+
     return render(request, "tasks/index.html", {
-        "tasks":Tasks
+        "tasks":request.session["Tasks"]
     })
 
 def add(request):
@@ -27,8 +30,8 @@ def add(request):
     if request.method == "POST":
         form = NewTasksForm(request.POST)
         if form.is_valid:
-            task = form.cleaned_data["task"]
-            Tasks.append(task)
+            task = request.POST
+            request.session["Tasks"] += [task["task"]]
             return HttpResponseRedirect(reverse("tasks:index"))
         else:
             return render(request,"tasks:add",{
